@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 )
 
@@ -14,7 +15,7 @@ func main() {
 
 	switch comando {
 	case 1:
-		fmt.Println("Iniciar monitoramento.")
+		iniciandoMonitoramento()
 	case 2:
 		fmt.Println("Exibir logs.")
 	case 0:
@@ -33,4 +34,19 @@ func commandLeen() int {
 	fmt.Println("O comando escolhido foi", comandoLido)
 
 	return comandoLido
+}
+
+func iniciandoMonitoramento() {
+	fmt.Println("Monitorando...")
+
+	site := "https://cursos.alura.com.br/course/golang/task/27964"
+	resp, _ := http.Get(site)
+
+	if resp.StatusCode == 200 {
+		fmt.Printf("O site: %v está ativo e rodando.", site)
+	} else {
+		fmt.Printf("Site: %s, está com problema. %v", site, resp.StatusCode)
+
+	}
+
 }
