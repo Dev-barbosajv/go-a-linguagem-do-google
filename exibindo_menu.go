@@ -40,5 +40,6 @@ func iniciandoMonitoramento() {
 	fmt.Println("Monitorando...")
 
 	site := "https://www.alura.com.br"
-	resp, err := http.Get(site)
+	resp, _ := http.Get(site)
+	fmt.Println(resp)
 }
