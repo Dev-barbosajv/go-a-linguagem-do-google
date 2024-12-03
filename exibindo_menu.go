@@ -39,11 +39,7 @@ func commandLeen() int {
 func iniciandoMonitoramento() {
 	fmt.Println("Monitorando...")
 
-	var sites [4]string
-	sites[0] = "https://cursos.alura.com.br/course/golang/task/27964"
-	sites[1] = "https://google.com"
-	sites[2] = "https://facebook.com"
-	sites[3] = "https://instagram.com"
+	var sites = []string{"https://cursos.alura.com.br/course/golang/task/27964", "https://google.com", "https://facebook.com", "https://instagram.com"}
 
 	fmt.Println(sites)
 
