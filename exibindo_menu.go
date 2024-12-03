@@ -39,14 +39,22 @@ func commandLeen() int {
 func iniciandoMonitoramento() {
 	fmt.Println("Monitorando...")
 
+	var sites [4]string
+	sites[0] = "https://cursos.alura.com.br/course/golang/task/27964"
+	sites[1] = "https://google.com"
+	sites[2] = "https://facebook.com"
+	sites[3] = "https://instagram.com"
+
+	fmt.Println(sites)
+
 	site := "https://cursos.alura.com.br/course/golang/task/27964"
 	resp, _ := http.Get(site)
 
 	if resp.StatusCode == 200 {
 		fmt.Printf("O site: %v está ativo e rodando.", site)
 	} else {
+
 		fmt.Printf("Site: %s, está com problema. %v", site, resp.StatusCode)
 
 	}
-
 }
