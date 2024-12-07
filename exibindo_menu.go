@@ -6,7 +6,9 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -101,12 +103,15 @@ func lendoNomeSite() []string {
 	return sites
 }
 
-func registraLogs(string, bool) {
-	arquivo, err := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE, 0666)
+func registraLogs(site string, status bool) {
+	arquivo, err := os.OpenFile("log.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(arquivo)
+
+	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + "- Online:" + strconv.FormatBool(status) + "\n")
+
+	arquivo.Close()
 
 }
