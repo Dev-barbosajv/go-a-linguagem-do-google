@@ -65,5 +65,3 @@ Este curso foi uma excelente introdução ao Go. Aprendi conceitos fundamentais 
 
 Se você também está começando a estudar Go ou quer aprender mais sobre essa linguagem incrível, recomendo muito esse curso! 🌟
 
-## Licença 📜
-
