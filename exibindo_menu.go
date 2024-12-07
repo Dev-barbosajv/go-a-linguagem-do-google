@@ -39,13 +39,15 @@ func commandLeen() int {
 func iniciandoMonitoramento() {
 	fmt.Printf("Monitorando...\n\n")
 
-	sites := []string{"https://cursos.alura.com.br/course/golang/task/27964",
-		"https://google.com", "https://facebook.com", "https://instagram.com"}
+	sites := lendoNomeSite()
 
 	for i, site := range sites {
 		fmt.Printf("Posicao: %d | site: %s\n", i, site)
 
-		resp, _ := http.Get(site)
+		resp, err := http.Get(site)
+		if err != nil {
+			fmt.Println("Ocorreu um erro:", err)
+		}
 		if resp.StatusCode == 200 {
 			fmt.Printf("O site: %v está ativo e rodando.\n\n", site)
 		} else {
@@ -54,4 +56,20 @@ func iniciandoMonitoramento() {
 		}
 
 	}
+
+}
+
+func lendoNomeSite() []string {
+
+	var sites []string
+
+	arquivo, err := os.Open("/Users/devjhonny/estudos/go-a-linguagem-do-google/sites.txt")
+	fmt.Println(arquivo)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
+
+	return sites
+
 }
