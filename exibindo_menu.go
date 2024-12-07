@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -46,30 +49,51 @@ func iniciandoMonitoramento() {
 
 		resp, err := http.Get(site)
 		if err != nil {
-			fmt.Println("Ocorreu um erro:", err)
+			fmt.Println("Ocorreu um erro ao acessar o site:", err)
+			continue // Pula para o próximo site, caso haja erro
 		}
-		if resp.StatusCode == 200 {
+
+		// Verifique se a resposta foi bem-sucedida
+		if resp != nil && resp.StatusCode == 200 {
 			fmt.Printf("O site: %v está ativo e rodando.\n\n", site)
 		} else {
-
-			fmt.Printf("Site: %s, está com problema. %v", site, resp.StatusCode)
+			// Tratar o caso onde a resposta é diferente de 200
+			fmt.Printf("Site: %s está com problema. Status Code: %v\n", site, resp.StatusCode)
 		}
-
 	}
-
 }
 
 func lendoNomeSite() []string {
-
 	var sites []string
 
+	// Tente abrir o arquivo e verifique se houve erro
 	arquivo, err := os.Open("/Users/devjhonny/estudos/go-a-linguagem-do-google/sites.txt")
-	fmt.Println(arquivo)
-
 	if err != nil {
-		fmt.Println("Ocorreu um erro:", err)
+		fmt.Println("Erro ao abrir o arquivo:", err)
+		return nil // Retorna um slice vazio em caso de erro
+	}
+	defer arquivo.Close() // Certifique-se de fechar o arquivo ao final
+
+	leitor := bufio.NewReader(arquivo)
+
+	for {
+		linha, err := leitor.ReadString('\n')
+		linha = strings.TrimSpace(linha)
+
+		// Só adiciona ao slice se a linha não for vazia
+		if linha != "" {
+			sites = append(sites, linha)
+		}
+
+		if err == io.EOF {
+			break
+		}
+
+		if err != nil {
+			fmt.Println("Erro ao ler o arquivo:", err)
+			break
+		}
 	}
 
 	return sites
-
 }
